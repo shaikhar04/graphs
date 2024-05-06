@@ -9,7 +9,9 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 import java.util.Queue;
+import java.util.Set;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -166,6 +168,26 @@ public class Graph {
       return result;
     } // if/else
   } // vertexNumber(String)
+
+  public void reachableFrom(PrintWriter pen, int vertex) {
+    Set<Integer> visited = new HashSet<Integer>();
+    reachableFrom(pen, vertex, visited);
+      
+  } // reachableFrom(PrintWriter, int)
+
+  private void reachableFrom(PrintWriter pen, int vertex, Set<Integer> visited) {
+    List<Edge> neighbours = vertices[vertex];
+    int neighbour;
+    for (Edge edge : neighbours) {
+      neighbour = edge.to();
+      if (edge.from() == vertex && !visited.contains(neighbour)) {
+        pen.println(vertexName(neighbour));
+        visited.add(neighbour);
+        reachableFrom(pen, neighbour, visited);
+      } // if
+    } // for
+      
+  } // reachableFrom(PrintWriter, int)
 
   // +-----------+---------------------------------------------------
   // | Observers |
